@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=True
+Name=Click-Script
+Icon=utilities-terminal
+Exec=gnome-terminal -e "bash -c './docker-image-call.sh;$SHELL'"
+Categories=Application;
