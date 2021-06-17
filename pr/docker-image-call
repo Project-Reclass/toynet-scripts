@@ -1,0 +1,19 @@
+#!/bin/bash
+# Author: Kunal Jha
+# Description: This file will open and prompt the user to put their password in to load docker
+# Date: 05/14/2021
+# Modifited: 06/14/2021
+
+#Terminal opens and have commands to display 
+set -e 
+set -x
+#User needs to join docker group; create a unprivileged user that can use docker and their user group
+
+#https://stackoverflow.com/questions/59895/how-can-i-get-the-source-directory-of-a-bash-script-from-within-the-script-itsel
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+docker load -i "${SCRIPT_DIR}/toynet-django.tar"
+docker load -i "${SCRIPT_DIR}/toynet-react.tar" 
+
+docker-compose -f "${SCRIPT_DIR}/docker-compose.yml" up -d --build 
+

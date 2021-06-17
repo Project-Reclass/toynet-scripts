@@ -1,0 +1,18 @@
+#!/bin/bash
+# Author: Kunal Jha
+# Description: This file will open docker-image-call and use pkexec to prompt the user to put their password in a GUI
+# Date: 05/14/2021
+# Modifited: 06/14/2021
+
+
+#pkexec uses the target user's home directy, and allows an authorized user to execute PROGRAM as another user. 
+#https://linux.die.net/man/1/pkexec
+
+FILE=/home/kunal/pr/docker-image-call
+
+echo "This script is about to run another script."
+pkexec $FILE
+echo "This script has just run another script"
+echo 
+firefox localhost:3000 
+echo "Open Firefox and Toynet"
