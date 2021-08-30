@@ -20,6 +20,10 @@ Or on Linux you can run the bash script
 
 Optionally, you can run the golang script for your specific OS/hardware
 
+This can be accomplished by navigating to the go binary you need and running it in a terminal
+
+e.g. ```./toynet-linux```
+
 All scripts should make toynet available at: http://localhost:3000
 
 
