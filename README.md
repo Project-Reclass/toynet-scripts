@@ -41,4 +41,4 @@ Optionally, you can run toynet yourself and pull the images directly from docker
 However you'll need to pull both the frontend and the backend with: 
 
 ```docker pull projectreclass/toynet-frontend:latest``` and 
-```docker push projectreclass/toynet-backend:latest```
+```docker pull projectreclass/toynet-backend:latest```
