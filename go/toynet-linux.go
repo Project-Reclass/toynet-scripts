@@ -3,16 +3,17 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os/exec"
 )
 
 func main() {
-	wget := exec.Command("wget", "https://raw.githubusercontent.com/Project-Reclass/toynet-react/master/docker-compose.yml")
+	resp, err := http.Get("https://raw.githubusercontent.com/Project-Reclass/toynet-react/master/docker-compose.yml")
 	log.Printf("Pulling Toynet config from Github....")
-	wgetErr := wget.Run()
-	if wgetErr != nil {
-		log.Printf("Toynet Container failed to run with error: %v", wgetErr)
+	if err != nil {
+		log.Printf("Toynet Container failed to run with error: %v", err)
 	}
+	defer resp.Body.Close()
 
 	toynet := exec.Command("docker-compose", "-f", "docker-compose.yml", "up", "-d", "--build")
 	log.Printf("Starting Toynet....")
