@@ -1,25 +1,40 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"log"
+	"net/http"
+	"os"
 	"os/exec"
 )
 
 func main() {
-	wget := exec.Command("Invoke-WebRequest", "https://raw.githubusercontent.com/Project-Reclass/toynet-react/master/docker-compose.yml", "-Outfile", "docker-compose.yml")
+	resp, err := http.Get("https://raw.githubusercontent.com/Project-Reclass/toynet-react/master/docker-compose.yml")
 	log.Printf("Pulling Toynet config from Github....")
-	wgetErr := wget.Run()
-	if wgetErr != nil {
-		log.Printf("Toynet Container failed to run with error: %v", wgetErr)
+	if err != nil {
+		log.Printf("Toynet Container failed to run with error: %v", err)
 	}
+	defer resp.Body.Close()
 
-	toynet := exec.Command("docker-compose", "-f", "docker-compose.yml", "up", "-d", "--build")
-	log.Printf("Starting Toynet....")
-	toynetErr := toynet.Run()
-	if toynetErr != nil {
+	_, toynetErr := toynetFunc("docker-compose", "-f", "docker-compose.yml", "up", "-d", "--build")
+	if err != nil {
 		log.Printf("Toynet Container failed to run with error: %v", toynetErr)
 	} else {
 		fmt.Println("Toynet is running at http://localhost:3000")
 	}
+}
+
+func toynetFunc(cmd string, args ...string) (string, error) {
+	toynet := exec.Command(cmd, args...)
+	var stdBuffer bytes.Buffer
+	mw := io.MultiWriter(os.Stdout, &stdBuffer)
+
+	toynet.Stdout = mw
+	toynet.Stderr = mw
+
+	toynetErr := toynet.Run()
+
+	return stdBuffer.String(), toynetErr
 }
