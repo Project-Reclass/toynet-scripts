@@ -13,7 +13,7 @@ import (
 func main() {
 
 	fileName := "docker-compose.yml"
-	url := "https://raw.githubusercontent.com/Project-Reclass/toynet-react/master/docker-compose.yml"
+	url := "https://raw.githubusercontent.com/Project-Reclass/toynet-react/main/docker-compose.yml"
 
 	file, err := os.Create(fileName)
 	if err != nil {
